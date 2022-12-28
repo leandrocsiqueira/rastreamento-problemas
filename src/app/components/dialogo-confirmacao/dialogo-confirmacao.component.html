@@ -1,0 +1,14 @@
+<clr-modal [clrModalOpen]="idProblema !== null" [clrModalClosable]="false">
+  <h3 class="modal-title">Solucionar Problema # {{ idProblema }}</h3>
+  <div class="modal-body">
+    <p>Tem certeza de que deseja confirmar a solução do problema?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="aoCancelar()">
+      Cancelar
+    </button>
+    <button type="button" class="btn btn-danger" (click)="aoConfirmar()">
+      Confirmar
+    </button>
+  </div>
+</clr-modal>

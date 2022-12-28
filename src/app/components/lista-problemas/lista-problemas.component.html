@@ -1,0 +1,52 @@
+<ng-container *ngIf="exibirRelatorioProblemas === false">
+  <button class="btn btn-primary" (click)="exibirRelatorioProblemas = true">
+    Incluir novo problema
+  </button>
+  <clr-datagrid>
+    <clr-dg-column [clrDgField]="'idProblema'" [clrDgColType]="'number'"
+      >ID</clr-dg-column
+    >
+    <clr-dg-column [clrDgField]="'tipoProblema'">Tipo</clr-dg-column>
+    <clr-dg-column [clrDgField]="'tituloProblema'">Título</clr-dg-column>
+    <clr-dg-column [clrDgField]="'descricaoProblema'">Descrição </clr-dg-column>
+    <clr-dg-column [clrDgField]="'prioridadeProblema'"
+      >Prioridade</clr-dg-column
+    >
+
+    <clr-dg-row *clrDgItems="let problema of listaProblemasPendentes">
+      <clr-dg-action-overflow>
+        <button class="action-item" (click)="problemaSelecionado = problema">
+          Solucionar
+        </button>
+      </clr-dg-action-overflow>
+      <clr-dg-cell>{{ problema.idProblema }}</clr-dg-cell>
+      <clr-dg-cell>{{ problema.tipoProblema }}</clr-dg-cell>
+      <clr-dg-cell>{{ problema.tituloProblema }}</clr-dg-cell>
+      <clr-dg-cell>{{ problema.descricaoProblema }}</clr-dg-cell>
+      <clr-dg-cell>
+        <span
+          class="label"
+          [class.label-danger]="problema.prioridadeProblema === 'alta'"
+          >{{ problema.prioridadeProblema }}</span
+        >
+      </clr-dg-cell>
+    </clr-dg-row>
+
+    <clr-dg-footer
+      >{{ listaProblemasPendentes.length }} problemas</clr-dg-footer
+    >
+  </clr-datagrid>
+</ng-container>
+
+<app-relatorio-problemas
+  *ngIf="exibirRelatorioProblemas === true"
+  (fechamentoFormulario)="quandoFecharFormulario()"
+>
+</app-relatorio-problemas>
+
+<app-dialogo-confirmacao
+  *ngIf="problemaSelecionado"
+  [idProblema]="problemaSelecionado.idProblema"
+  (confirma)="aoConfirmar($event)"
+>
+</app-dialogo-confirmacao>
